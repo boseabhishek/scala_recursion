@@ -22,3 +22,27 @@ val l = List(1,2,3)
 
 countOccOf7(717)*/
 
+val a = 'c'
+
+val b = 'r'
+
+val s1 = "abcdef"
+
+
+def repString(s: String): String = {
+
+  def go(n: Int, s: String): String = {
+    n match {
+      case 0 => s
+      case _ => println("---"); go(n-1, repxwithy(s, n))
+    }
+  }
+  def repxwithy(str: String, pos: Int): String = {
+    if(s.charAt(pos).equals('x')) s.replace(s.charAt(pos), 'y') else s
+  }
+
+  go(s.length - 1, s)
+}
+
+val res = repString("axkxlx")
+
