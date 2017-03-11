@@ -4,10 +4,12 @@
 
 package level1
 
+import scala.annotation.tailrec
+
 object SumOfDigits extends App{
 
   def findSum(rowNum: Int): Int = {
-
+    @tailrec
     def go(n: Int, sum: Int): Int = {
       n match {
         case 0 => sum // pattern 1: base case
