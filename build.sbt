@@ -1,4 +1,4 @@
-name := "basic-project"
+name := "scala_recursion"
 
 organization := "example"
 
