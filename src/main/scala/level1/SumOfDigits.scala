@@ -8,7 +8,7 @@ import scala.annotation.tailrec
 
 object SumOfDigits extends App{
 
-  def findSum(rowNum: Int): Int = {
+  def findSum(number: Int): Int = {
     @tailrec
     def go(n: Int, sum: Int): Int = {
       n match {
@@ -16,7 +16,7 @@ object SumOfDigits extends App{
         case _  => go(n/10, sum + n%10) // pattern 2: always, recursive methodName(decrementor/looping, actual calc logic)
       }
     }
-    go(rowNum, 0)
+    go(number, 0)
   }
 
   val x = findSum(9999)
