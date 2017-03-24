@@ -13,6 +13,15 @@ class ConvertArabicToRomanSpec extends WordSpec with Matchers {
       "return VII, when input is 7" in {
         convertToRoman(7) should be("VII")
       }
+      "return CDI, when input is 40" in {
+        convertToRoman(40) should be("XL")
+      }
+      "return CDI, when input is 400" in {
+        convertToRoman(400) should be("CD")
+      }
+      "return CDI, when input is 600" in {
+        convertToRoman(600) should be("DC")
+      }
       "return C, when input is 100" in {
         convertToRoman(100) should be("C")
       }
@@ -28,6 +37,10 @@ class ConvertArabicToRomanSpec extends WordSpec with Matchers {
       "return CCCX, when input is 310" in {
         convertToRoman(310) should be("CCCX")
       }
+      "return CDI, when input is 401" in {
+        convertToRoman(401) should be("CDI")
+      }
+
 
     }
 
