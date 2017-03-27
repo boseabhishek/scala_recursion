@@ -4,11 +4,11 @@ import scala.annotation.tailrec
 
 object ConvertArabicToRoman {
 
-  val matches = Map(0 -> "", 1 -> " I", 4 -> "IV", 5 -> "V", 9 -> "IX", 10 -> "X", 40 -> "XL", 90 -> "XC", 100 -> "C", 400 -> "CD", 900 -> "CM", 1000 -> "M")
+  val matches = Map(0 -> "", 4 -> "IV", 9 -> "IX", 40 -> "XL", 90 -> "XC", 400 -> "CD", 900 -> "CM", 1000 -> "M")
 
   def convertToRoman(number: Int): String = {
 
-    def apple(i: Int) = i match {
+    def get1stAnd5th(i: Int) = i match {
       case 1 => ("I", "V")
       case 10 => ("X", "L")
       case 100 => ("C", "D")
@@ -19,10 +19,10 @@ object ConvertArabicToRoman {
       else appendCharSeq(s, n - 1, accum + s)
     }
 
-    def createRomanChars(pos: Int, n: Int, accum: String): String = {
-      val a = apple(pos)
-      val repeatedChars = appendCharSeq(a._1, n, accum)
-      if (n >= 5) a._2 + repeatedChars.substring(5) else repeatedChars
+    def createRomanChars(placeVal: Int, n: Int, accum: String): String = {
+      val parts = get1stAnd5th(placeVal)
+      val repeatedChars = appendCharSeq(parts._1, n, accum)
+      if (n >= 5) parts._2 + repeatedChars.substring(5) else repeatedChars
     }
 
     def formatRoman(num: Int, pos: Int): String = matches.getOrElse(num * pos, createRomanChars(pos, num, "")).trim
@@ -35,8 +35,8 @@ object ConvertArabicToRoman {
       }
     }
 
-      if (number > 1000) throw new RuntimeException("Number greater than 1000!")
-      else go(inRoman = "", counter = 1)
-    }
+    if (number > 1000) throw new RuntimeException("Number greater than 1000!")
+    else go(inRoman = "", counter = 1)
+  }
 
 }
