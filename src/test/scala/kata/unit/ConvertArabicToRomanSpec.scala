@@ -16,6 +16,9 @@ class ConvertArabicToRomanSpec extends WordSpec with Matchers {
       "return IV, when input is 4" in {
         convertToRoman(4) should be("IV")
       }
+      "return X, when input is 10" in {
+        convertToRoman(10) should be("X")
+      }
       "return XXV, when input is 25" in {
         convertToRoman(25) should be("XXV")
       }
