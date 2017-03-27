@@ -4,39 +4,39 @@ import scala.annotation.tailrec
 
 object ConvertArabicToRoman {
 
-  val units = Map(0 -> "", 1 -> " I", 2 -> "II", 3 -> "III", 4 -> "IV", 5 -> "V", 6 -> "VI", 7 -> "VII", 8 -> "VIII", 9 -> "IX")
-
-  val tens = Map(0 -> "", 1 ->"X", 2->"XX", 3->"XXX", 4->"XD", 5->"D", 6->"DX", 7->"DXX", 8->"DXXX", 9->"XC")
-
-  val hundreds = Map(0 -> "", 1 ->"C", 2->"CC", 3->"CCC", 4->"CL", 5->"D", 6->"DC", 7->"DCC", 8->"DCCC", 9->"CM")
+  val matches = Map(0 -> "", 1 -> " I", 4 -> "IV", 5 -> "V", 9 -> "IX", 10 -> "X", 40 -> "XL", 90 -> "XC", 100 -> "C", 400 -> "CD", 900 -> "CM", 1000 -> "M")
 
   def convertToRoman(number: Int): String = {
 
-    def formatRoman(num: Int, str: String, counter: Int): String = {
-      counter match {
-        case 0 => units(num%10).trim+str
-        case 1 => tens(num%10).trim+str
-        case 2 => hundreds(num%10).trim+str
-      }
+    def apple(i: Int) = i match {
+      case 1 => ("I", "V")
+      case 10 => ("X", "L")
+      case 100 => ("C", "D")
     }
+
+    def appendCharSeq(s: String, n: Int, accum: String): String = {
+      if (n == 0) accum
+      else appendCharSeq(s, n - 1, accum + s)
+    }
+
+    def createRomanChars(pos: Int, n: Int, accum: String): String = {
+      val a = apple(pos)
+      val repeatedChars = appendCharSeq(a._1, n, accum)
+      if (n >= 5) a._2 + repeatedChars.substring(5) else repeatedChars
+    }
+
+    def formatRoman(num: Int, pos: Int): String = matches.getOrElse(num * pos, createRomanChars(pos, num, "")).trim
+
     @tailrec
-    def go(n: Int, inRoman: String, counter: Int): String = {
-      n match {
+    def go(number: Int = number, inRoman: String, counter: Int): String = {
+      number match {
         case 0 => inRoman
-        case _  => go(n/10, formatRoman(n, inRoman, counter), counter=counter+1) //unit(n%10).trim+sum
+        case _ => go(number / 10, formatRoman(number % 10, counter) + inRoman, counter = counter * 10)
       }
     }
 
-    number match {
-      case 10 => "X"
-      case 50 => "L"
-      case 100 => "C"
-      case 500 => "D"
-      case 1000 => "M"
-      case anyNum if anyNum>1000 => throw new RuntimeException("Number greater than 1000!")
-      case _ => go(number, "", 0)
+      if (number > 1000) throw new RuntimeException("Number greater than 1000!")
+      else go(inRoman = "", counter = 1)
     }
-
-  }
 
 }
